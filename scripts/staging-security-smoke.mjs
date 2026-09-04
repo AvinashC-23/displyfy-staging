@@ -77,6 +77,12 @@ try {
   assert.equal(anonymousMission.length, 0, "Anonymous user could see a registered-creator mission.");
 
   await requireData(creatorClient.auth.signInWithPassword({ email, password }), "sign in temporary creator");
+  const mfaEnrollment = await requireData(
+    creatorClient.auth.mfa.enroll({ factorType: "totp", friendlyName: "Staging security smoke" }),
+    "enroll temporary TOTP factor"
+  );
+  assert.ok(mfaEnrollment.id, "TOTP enrollment did not return a factor ID.");
+  assert.ok(mfaEnrollment.totp?.qr_code, "TOTP enrollment did not return a QR code.");
   const visibleMission = await requireData(creatorClient.from("missions").select("id").eq("id", missionId), "creator mission query");
   assert.equal(visibleMission.length, 1, "Approved creator could not see the eligible mission.");
   const finances = await requireData(creatorClient.from("mission_financials").select("mission_id").eq("mission_id", missionId), "creator finance query");
@@ -90,7 +96,7 @@ try {
   const privileged = await creatorClient.rpc("perform_admin_action", { target_type: "mission", target_id: missionId, target_action: "pause" });
   assert.ok(privileged.error, "Creator session unexpectedly executed an administrator action.");
 
-  console.log("Staging security smoke passed: visibility, finance isolation, reservation locking, and privileged RPC denial.");
+  console.log("Staging security smoke passed: MFA enrollment, visibility, finance isolation, reservation locking, and privileged RPC denial.");
 } finally {
   if (missionId) {
     await service.from("mission_term_acceptances").delete().eq("mission_id", missionId);
