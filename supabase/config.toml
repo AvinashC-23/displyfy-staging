@@ -11,11 +11,31 @@ major_version = 17
 
 [auth]
 enabled = true
-site_url = "http://127.0.0.1:3000"
-additional_redirect_urls = ["http://127.0.0.1:3000/**", "http://localhost:3000/**"]
+site_url = "https://displyfy-staging-git-staging-avinashc-23s-projects.vercel.app"
+additional_redirect_urls = [
+  "http://127.0.0.1:3000/**",
+  "http://localhost:3000/**",
+  "https://displyfy-staging-git-staging-avinashc-23s-projects.vercel.app/**"
+]
 jwt_expiry = 3600
 enable_signup = true
 
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
+secure_password_change = true
+max_frequency = "1m"
+otp_length = 8
+otp_expiry = 3600
+
+[auth.mfa]
+max_enrolled_factors = 10
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
 [storage]
 enabled = true
-file_size_limit = "5MiB"
+file_size_limit = "50MiB"
