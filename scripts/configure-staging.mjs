@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { randomBytes } from "node:crypto";
-import { existsSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const projectRef = process.argv[2];
@@ -9,7 +9,8 @@ if (!/^[a-z]{20}$/.test(projectRef ?? "")) {
 }
 
 const target = resolve(".env.local");
-if (existsSync(target) && process.env.FORCE !== "1") {
+const targetExists = existsSync(target);
+if (targetExists && process.env.FORCE !== "1") {
   throw new Error(".env.local already exists. Refusing to overwrite it without FORCE=1.");
 }
 
@@ -32,5 +33,6 @@ const values = [
   ""
 ].join("\n");
 
-writeFileSync(target, values, { encoding: "utf8", mode: 0o600, flag: "wx" });
+writeFileSync(target, values, { encoding: "utf8", mode: 0o600, flag: targetExists ? "w" : "wx" });
+chmodSync(target, 0o600);
 console.log("Created .env.local with staging configuration. Credential values were not printed.");

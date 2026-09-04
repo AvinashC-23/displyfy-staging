@@ -11,10 +11,11 @@
     "dev": "next dev",
     "start": "next start",
     "build": "next build",
+    "typegen": "next typegen",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test; status=$?; npm run typegen; exit $status",
     "configure:staging": "node scripts/configure-staging.mjs",
     "test:staging-security": "node --env-file=.env.local scripts/staging-security-smoke.mjs"
   },

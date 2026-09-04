@@ -1,4 +1,4 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { demoAuditEvents, demoCreators, demoMissions, demoSubmissions } from "./demo-data";
 import type { AuditEvent, CreatorProfile, Mission, Submission } from "./types";
 import { authenticatedProfile, isPersistentMode } from "./supabase/server";
@@ -142,19 +142,9 @@ class SupabaseRepository implements DisplyfyRepository {
   }
 }
 
-export function getRepository(): DisplyfyRepository {
-  const useSupabase =
-    isPersistentMode() &&
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  const client = useSupabase ? createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, { auth: { persistSession: false, autoRefreshToken: false } }) : null;
-  return client ? new SupabaseRepository(client) : new DemoRepository();
-}
-
 export async function getRepositoryForRole(role: "creator" | "brand" | "admin"): Promise<DisplyfyRepository> {
   if (!isPersistentMode()) return new DemoRepository();
-  const auth = await authenticatedProfile(role);
+  const auth = await authenticatedProfile(role, role === "admin");
   if (!auth) throw new Error("Authenticated role is required.");
   return new SupabaseRepository(auth.client);
 }

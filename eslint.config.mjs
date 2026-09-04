@@ -5,6 +5,7 @@ const eslintConfig = [
   ...nextVitals,
   globalIgnores([
     ".next/**",
+    ".next-*/**",
     "node_modules/**",
     "playwright-report/**",
     "test-results/**"

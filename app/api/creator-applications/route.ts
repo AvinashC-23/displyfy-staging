@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     if (!url || !publishableKey) return Response.json({ error: "Application service is temporarily unavailable." }, { status: 503 });
     const auth = createClient(url, publishableKey, { auth: { persistSession: false, autoRefreshToken: false } });
-    const { data: signUp, error: signUpError } = await auth.auth.signUp({ email: parsed.data.email, password: parsed.data.password, options: { data: { display_name: parsed.data.displayName }, emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback?next=/creator/dashboard` } });
+    const { data: signUp, error: signUpError } = await auth.auth.signUp({ email: parsed.data.email, password: parsed.data.password, options: { data: { display_name: parsed.data.displayName }, emailRedirectTo: `${request.nextUrl.origin}/auth/callback?next=/creator/dashboard` } });
     if (signUpError || !signUp.user) return Response.json({ message: "If the application can be accepted, verification instructions will be sent." }, { status: 202 });
     const admin = createAdminSupabase();
     const { error: profileError } = await admin.from("profiles").insert({ id: signUp.user.id, role: "creator", display_name: parsed.data.displayName, phone_e164: parsed.data.phone });
