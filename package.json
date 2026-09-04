@@ -1,0 +1,52 @@
+{
+  "name": "displyfy",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.20.0",
+    "npm": "10.9.2"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "start": "next start",
+    "build": "next build",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "configure:staging": "node scripts/configure-staging.mjs",
+    "test:staging-security": "node --env-file=.env.local scripts/staging-security-smoke.mjs"
+  },
+  "dependencies": {
+    "@gsap/react": "2.1.2",
+    "@hookform/resolvers": "5.9.1",
+    "@supabase/ssr": "0.12.6",
+    "@supabase/supabase-js": "2.115.0",
+    "gsap": "3.15.0",
+    "lucide-react": "1.41.0",
+    "next": "16.3.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "react-hook-form": "7.87.0",
+    "resend": "6.26.0",
+    "tailwindcss": "4.3.3",
+    "twilio": "6.1.0",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.4.1",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.4",
+    "jsdom": "30.0.1",
+    "playwright": "1.62.1",
+    "prettier": "3.9.6",
+    "typescript": "6.0.3",
+    "vite": "8.2.2",
+    "vitest": "5.0.0"
+  }
+}
