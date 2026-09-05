@@ -18,7 +18,7 @@ export default async function Page() {
   const committed = missions.reduce((sum, mission) => sum + mission.committedBudgetMinor, 0);
 
   return <div className="workspace-shell">
-    <WorkspaceNav role="brand" current="home" />
+    <WorkspaceNav role="brand" />
     <header className="workspace-welcome"><div><p className="workspace-kicker">Brand home · {mode} environment</p><h1>Northline Goods</h1><p>Shape clear creator work, review it confidently, and keep every campaign decision visible.</p></div><StatusPill status="approved" /></header>
 
     <section className="brand-command">

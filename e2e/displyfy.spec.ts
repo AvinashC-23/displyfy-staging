@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test("homepage communicates the marketplace", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Turn the attention you create into income." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Creator partnerships that perform for both sides." })).toBeVisible();
   await expect(page.getByRole("link", { name: "Join as a creator" })).toBeVisible();
 });
 
@@ -27,6 +27,22 @@ test("role dashboards render seeded workflows", async ({ page }) => {
   await page.goto("/admin"); await expect(page.getByRole("heading",{name:/Review what needs a decision/})).toBeVisible();
 });
 
+test("navigation derives its active section from the current route", async ({ page }) => {
+  await page.goto("/for-creators");
+  if (page.viewportSize()!.width < 900) await page.getByRole("button", { name: "Open navigation menu" }).click();
+  await expect(page.getByRole("link", { name: "Creators", exact: true })).toHaveAttribute("aria-current", "page");
+  await page.goto("/creator/account");
+  await expect(page.getByRole("link", { name: "Account", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(page.getByRole("heading", { name: "Your profile, history, and payout trail." })).toBeVisible();
+});
+
+test("creator can update account details in demo mode", async ({ page }) => {
+  await page.goto("/creator/account");
+  await page.getByLabel("Display name").fill("Maya Studio");
+  await page.getByRole("button", { name: "Save account details" }).click();
+  await expect(page.getByRole("status")).toContainText("local demo mode");
+});
+
 test("creator browses, opens, and applies to a mission", async ({ page }) => {
   await page.goto("/creator/missions");
   await expect(page.getByRole("heading", { name: "Find work that fits your content." })).toBeVisible();
@@ -45,6 +61,7 @@ test("brand mission back navigation keeps the current workspace", async ({ page 
   await expect(page.getByRole("navigation", { name: "Primary navigation" })).toHaveCount(0);
   await page.locator('.mission-grid a[href^="/brand/missions/"]').first().click();
   await expect(page).toHaveURL(/\/brand\/missions\//);
+  await expect(page.getByRole("link", { name: "My missions" })).toHaveAttribute("aria-current", "page");
   await expect(page.getByRole("heading", { name: "The creative ask" })).toBeVisible();
   await page.goBack();
   await expect(page).toHaveURL(/\/brand\/dashboard/);
@@ -53,7 +70,7 @@ test("brand mission back navigation keeps the current workspace", async ({ page 
 });
 
 test("primary pages do not overflow the viewport", async ({ page }) => {
-  for (const path of ["/", "/creator/dashboard", "/creator/missions", "/brand/dashboard", "/admin"]) {
+  for (const path of ["/", "/for-creators", "/for-brands", "/creator/dashboard", "/creator/missions", "/creator/account", "/brand/dashboard", "/admin"]) {
     await page.goto(path);
     await page.waitForLoadState("networkidle");
     const sizes = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, content: document.documentElement.scrollWidth }));

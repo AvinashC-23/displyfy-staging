@@ -177,6 +177,19 @@ export const missionApplicationSchema = z.object({
   acceptCurrentTerms: z.literal(true)
 });
 
+export const creatorProfileUpdateSchema = z.object({
+  legalName: z.string().trim().min(2).max(120),
+  displayName: z.string().trim().min(2).max(80),
+  instagramUsername: instagramUsernameSchema,
+  instagramProfileUrl: instagramProfileUrlSchema,
+  phone: z.string().trim().regex(/^\+[1-9]\d{7,14}$/, "Use E.164 format, for example +14155552671."),
+  country: z.enum(countries),
+  categories: z.array(z.enum(contentCategories)).min(1).max(5),
+  preferredLanguage: z.string().trim().min(2).max(40),
+  followerCount: z.coerce.number().int().min(0).max(2_000_000_000),
+  averageReelViews: z.coerce.number().int().min(0).max(500_000_000)
+});
+
 export const submissionReviewSchema = z.object({
   submissionId: z.string().uuid(),
   placementVerified: z.coerce.boolean(),
@@ -204,5 +217,6 @@ export type BrandAccessInput = z.infer<typeof brandAccessSchema>;
 export type MissionInput = z.infer<typeof missionSchema>;
 export type ReelSubmissionInput = z.infer<typeof reelSubmissionSchema>;
 export type MissionApplicationInput = z.infer<typeof missionApplicationSchema>;
+export type CreatorProfileUpdateInput = z.infer<typeof creatorProfileUpdateSchema>;
 export type SubmissionReviewInput = z.infer<typeof submissionReviewSchema>;
 export type AdminActionInput = z.infer<typeof adminActionSchema>;

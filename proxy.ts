@@ -4,7 +4,7 @@ import { assertRuntimeConfiguration, getAppMode } from "@/lib/config";
 
 type AppRole = "creator" | "brand" | "admin";
 
-const roleForPath = (path: string): AppRole | null => path.startsWith("/admin") ? "admin" : path.startsWith("/brand/") ? "brand" : path.startsWith("/creator/dashboard") || path.startsWith("/creator/missions") ? "creator" : null;
+const roleForPath = (path: string): AppRole | null => path.startsWith("/admin") ? "admin" : path.startsWith("/brand/") ? "brand" : path.startsWith("/creator/dashboard") || path.startsWith("/creator/missions") || path.startsWith("/creator/account") ? "creator" : null;
 const homeForRole = (role: AppRole) => role === "brand" ? "/brand/dashboard" : role === "admin" ? "/admin" : "/creator/dashboard";
 const loginForRole = (role: AppRole) => role === "brand" ? "/brand/login" : role === "admin" ? "/admin/login" : "/creator/login";
 const loginPaths = new Set(["/creator/login", "/brand/login", "/admin/login"]);
@@ -66,4 +66,4 @@ export async function proxy(request: NextRequest) {
   return response;
 }
 
-export const config = { matcher: ["/", "/creator/login", "/brand/login", "/creator/dashboard/:path*", "/creator/missions/:path*", "/brand/dashboard/:path*", "/brand/missions/:path*", "/admin/:path*"] };
+export const config = { matcher: ["/", "/creator/login", "/brand/login", "/creator/dashboard/:path*", "/creator/missions/:path*", "/creator/account/:path*", "/brand/dashboard/:path*", "/brand/missions/:path*", "/admin/:path*"] };

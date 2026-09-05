@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import { ArrowRight, BadgeCheck, BarChart3, CircleCheck, Eye, ShieldCheck, Sparkles, Target } from "lucide-react";
+import { ArrowRight, BadgeCheck, BarChart3, Building2, CircleCheck, Eye, ShieldCheck, Sparkles, Target } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -87,12 +87,12 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
       <div className="hero-ambient" aria-hidden />
       <div className="shell hero-v2-grid">
         <div className="hero-v2-copy">
-          <p className="kicker hero-reveal">Creator-native advertising, verified</p>
-          <h1 className="hero-reveal">Turn the attention you create into income.</h1>
-          <p className="hero-v2-intro hero-reveal">Displyfy gives creators room to create and gives brands the structure to invest with confidence. Natural placements, transparent rules, verified performance.</p>
+          <p className="kicker hero-reveal">Creator partnerships, built for both sides</p>
+          <h1 className="hero-reveal">Creator partnerships that perform for both sides.</h1>
+          <p className="hero-v2-intro hero-reveal">Brands get accountable campaigns and creators keep the voice their audience trusts. One clear system for briefs, approvals, performance, and payout.</p>
           <div className="hero-v2-actions hero-reveal">
-            <Link className="button acid" href="/creator/apply">Join as a creator <ArrowRight size={18} aria-hidden /></Link>
-            <Link className="button glass" href="/brand/access">Launch a brand mission</Link>
+            <Link className="button acid" href="/brand/access">Launch a brand mission <ArrowRight size={18} aria-hidden /></Link>
+            <Link className="button glass" href="/creator/apply">Join as a creator</Link>
           </div>
         </div>
         <div className="hero-portrait hero-reveal">
@@ -101,7 +101,7 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
         </div>
       </div>
       <div className="signal-marquee" aria-label="Displyfy campaign principles"><div className="marquee-track">
-        {Array.from({ length: 2 }).map((_, group) => <div className="marquee-group" aria-hidden={group === 1} key={group}><span>Creator led</span><i /><span>Brand safe</span><i /><span>Performance verified</span><i /><span>Terms upfront</span><i /></div>)}
+        {Array.from({ length: 2 }).map((_, group) => <div className="marquee-group" aria-hidden={group === 1} key={group}><span>Creator led</span><i /><span>Brand accountable</span><i /><span>Performance verified</span><i /><span>Budget controlled</span><i /></div>)}
       </div></div>
     </section>
 
@@ -110,15 +110,16 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
         <div className="chapter-heading"><p className="kicker">Clarity earns trust</p><h2>A marketplace designed to protect both sides of the brief.</h2><p>Campaign expectations are visible before anyone commits. Approval, access, measurement, and payout status live in one accountable system.</p></div>
         <div className="trust-bento">
           <article className="bento-card bento-lead">
-            <div className="bento-icon"><ShieldCheck size={26} aria-hidden /></div>
-            <div><p className="card-label">Campaign guardrails</p><h3>Terms, eligibility, deadlines, disclosure, and budget are set before content goes live.</h3></div>
-            <div className="bento-proof"><CircleCheck size={18} /><span>Server-authorized participation</span></div>
+            <div className="bento-icon"><Building2 size={26} aria-hidden /></div>
+            <div><p className="card-label">For brand teams</p><h3>Set the audience, creative boundaries, capacity, and maximum spend before a mission opens.</h3></div>
+            <div className="bento-proof"><CircleCheck size={18} /><span>Every payout traces back to verified performance</span></div>
           </article>
           <article className="bento-card bento-image">
             <Image src="/assets/illustrations/creator-product-placement.webp" alt="Illustration of a creator filming a natural product placement" fill sizes="(max-width: 900px) 100vw, 42vw" />
             <div className="image-wash" />
-            <div className="bento-image-copy"><Sparkles size={24} /><h3>Made for the creator&apos;s real format.</h3></div>
+            <div className="bento-image-copy"><Sparkles size={24} /><h3>Brand presence that still feels native.</h3></div>
           </article>
+          <article className="bento-card bento-creator"><ShieldCheck size={24} /><strong>Creator protected</strong><p>Requirements and earning rules are visible before a creator accepts.</p></article>
           <article className="bento-card bento-metric"><BarChart3 size={24} /><strong>Source-labeled</strong><p>Every performance snapshot records where the data came from.</p></article>
           <article className="bento-card bento-mark"><Image src="/brand/displyfy-mark-v3.svg" alt="" width={80} height={80} /><span>Reviewed before it runs</span></article>
         </div>
@@ -134,12 +135,12 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
         </div>
         <div className="story-stack">
           <article className="story-card">
-            <div className="story-media"><Image src="/assets/illustrations/fitness-creator.webp" alt="Illustration of a creator filming lifestyle content at home" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
-            <div className="story-copy"><Target size={25} /><h3>Choose work that fits.</h3><p>Creators can assess the placement, creative restrictions, timeline, disclosure, and payout potential before accepting current terms.</p><Link href="/for-creators">For creators <ArrowRight size={17} /></Link></div>
-          </article>
-          <article className="story-card">
             <div className="story-media"><Image src="/assets/illustrations/brand-content-review.webp" alt="Illustration of a brand team reviewing creator content" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
             <div className="story-copy"><BadgeCheck size={25} /><h3>Know what you are funding.</h3><p>Brands define measurable missions with capacity, budget, brand-safety, creator criteria, and a documented verification path.</p><Link href="/for-brands">For brands <ArrowRight size={17} /></Link></div>
+          </article>
+          <article className="story-card">
+            <div className="story-media"><Image src="/assets/illustrations/fitness-creator.webp" alt="Illustration of a creator filming lifestyle content at home" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
+            <div className="story-copy"><Target size={25} /><h3>Choose work that fits.</h3><p>Creators can assess the placement, creative restrictions, timeline, disclosure, and payout potential before accepting current terms.</p><Link href="/for-creators">For creators <ArrowRight size={17} /></Link></div>
           </article>
           <article className="story-card">
             <div className="story-media"><Image src="/assets/illustrations/verified-performance.webp" alt="Illustration of verified content performance and payout milestones" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>

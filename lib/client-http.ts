@@ -4,9 +4,17 @@ export type ApiResult = Record<string, unknown> & {
 };
 
 export async function postJson(path: string, body: unknown): Promise<ApiResult> {
+  return sendJson(path, "POST", body);
+}
+
+export async function patchJson(path: string, body: unknown): Promise<ApiResult> {
+  return sendJson(path, "PATCH", body);
+}
+
+async function sendJson(path: string, method: "POST" | "PATCH", body: unknown): Promise<ApiResult> {
   try {
     const response = await fetch(path, {
-      method: "POST",
+      method,
       headers: { "content-type": "application/json" },
       body: JSON.stringify(body)
     });

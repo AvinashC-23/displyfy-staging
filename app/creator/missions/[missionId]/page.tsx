@@ -18,5 +18,5 @@ export default async function Page({ params }: { params: Promise<{ missionId: st
   const beforeDeadline = new Date(mission.applicationDeadline) >= new Date();
   const canApply = availability.available && eligible && permitted && beforeDeadline;
   const reason = !eligible ? "This mission does not currently match your creator profile." : !permitted ? "This mission is invitation only." : !beforeDeadline ? "Applications have closed." : undefined;
-  return <><div className="workspace-shell workspace-nav-only"><WorkspaceNav role="creator" current="missions" /></div><MissionDetail mission={mission} mode="creator" canApply={canApply} unavailableReason={reason} /></>;
+  return <><div className="workspace-shell workspace-nav-only"><WorkspaceNav role="creator" /></div><MissionDetail mission={mission} mode="creator" canApply={canApply} unavailableReason={reason} /></>;
 }
