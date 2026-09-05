@@ -9,5 +9,5 @@ export default async function Page({ params }: { params: Promise<{ missionId: st
   const missions = await repo.listMissions();
   const mission = missions.find(item => item.id === missionId);
   if (!mission) notFound();
-  return <><div className="workspace-shell workspace-nav-only"><WorkspaceNav role="brand" current="missions" /></div><MissionDetail mission={mission} mode="brand" /></>;
+  return <><div className="workspace-shell workspace-nav-only"><WorkspaceNav role="brand" /></div><MissionDetail mission={mission} mode="brand" /></>;
 }

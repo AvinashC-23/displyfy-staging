@@ -2,9 +2,11 @@ import { NextRequest } from "next/server";
 import { describe, expect, it } from "vitest";
 import { POST as submitBrandAccess } from "@/app/api/brand-access/route";
 import { POST as submitReel } from "@/app/api/submissions/route";
+import { PATCH as updateCreatorProfile } from "@/app/api/creator-profile/route";
 import { demoMissions } from "@/lib/demo-data";
 
 function request(path: string, body: unknown, origin = "http://localhost:3000") { return new NextRequest(`http://localhost:3000${path}`, { method:"POST", headers:{"content-type":"application/json",origin}, body:JSON.stringify(body) }); }
+const profile = { legalName:"Maya Rao",displayName:"Maya Desk",instagramUsername:"@mayadesk",instagramProfileUrl:"https://instagram.com/mayadesk",phone:"+919876543210",country:"IN",categories:["lifestyle","tech"],preferredLanguage:"English",followerCount:42000,averageReelViews:18000 };
 
 describe("route authorization and workflow", () => {
   it("rejects cross-origin mutation requests", async () => {
@@ -25,5 +27,14 @@ describe("route authorization and workflow", () => {
       body: JSON.stringify({ message: "x" })
     }));
     expect(response.status).toBe(413);
+  });
+  it("rejects cross-origin creator profile changes", async () => {
+    const response = await updateCreatorProfile(request("/api/creator-profile", profile, "https://attacker.test"));
+    expect(response.status).toBe(403);
+  });
+  it("validates and accepts creator profile changes in demo mode", async () => {
+    const response = await updateCreatorProfile(request("/api/creator-profile", profile));
+    expect(response.status).toBe(202);
+    expect(await response.json()).toMatchObject({ mode:"demo", persisted:false });
   });
 });

@@ -21,7 +21,7 @@ export default async function Page() {
   const earnings = submissions.reduce((sum, item) => sum + item.payoutEligibleMinor, 0);
 
   return <div className="workspace-shell">
-    <WorkspaceNav role="creator" current="home" />
+    <WorkspaceNav role="creator" />
     <header className="workspace-welcome">
       <div><p className="workspace-kicker">Creator home · {mode} environment</p><h1>Good morning, {creator.displayName}.</h1><p>Find a brief that feels natural, understand it fully, then make it yours.</p></div>
       <StatusPill status={creator.status} />

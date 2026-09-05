@@ -9,7 +9,7 @@ export default async function Page() {
   const repo = await getRepositoryForRole("creator");
   const missions = await repo.listMissions();
   return <div className="workspace-shell">
-    <WorkspaceNav role="creator" current="missions" />
+    <WorkspaceNav role="creator" />
     <header className="catalog-heading"><p className="workspace-kicker">Creator opportunities</p><h1>Find work that fits your content.</h1><p>Browse every visible mission like a product catalog. Open one to see the full brief, eligibility, timeline, and payout before applying.</p></header>
     <MissionCatalog missions={missions} />
   </div>;
