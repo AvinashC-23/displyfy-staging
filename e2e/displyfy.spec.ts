@@ -37,6 +37,38 @@ test("creator application validates and enters demo review", async ({ page }) =>
   await page.getByRole("button",{name:"Submit application"}).click(); await expect(page.getByRole("status")).toContainText("local demo mode");
 });
 
+test("shared login shell preserves role-specific authentication", async ({ page }) => {
+  await page.goto("/creator/login");
+  await expect(page.getByLabel("Email")).toBeVisible();
+  await expect(page.getByLabel("Password")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Start your creator application." })).toBeVisible();
+
+  await page.goto("/brand/login");
+  await expect(page.getByLabel("Email")).toBeVisible();
+  await expect(page.getByLabel("Password")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Send secure sign-in link" })).toBeVisible();
+
+  await page.goto("/admin/login");
+  await expect(page.getByLabel("Email")).toBeVisible();
+  await expect(page.getByLabel("Password")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Start your creator application." })).toHaveCount(0);
+});
+
+test("brand access request validates and enters demo review", async ({ page }) => {
+  await page.goto("/brand/access");
+  await page.getByLabel("Contact name").fill("Asha Mehta");
+  await page.getByLabel("Job title").fill("Marketing lead");
+  await page.getByLabel("Company name").fill("Northline Goods");
+  await page.getByLabel("Company website").fill("https://northline.example");
+  await page.getByLabel("Work email").fill("asha@northline.example");
+  await page.getByLabel("Phone").fill("+919876543210");
+  await page.getByLabel("Country").selectOption("IN");
+  await page.getByLabel("Estimated campaign budget").selectOption("5k-25k");
+  await page.getByLabel("Campaign objective").fill("Launch a creator-led desk collection with measurable product discovery.");
+  await page.getByRole("button", { name: "Request brand access" }).click();
+  await expect(page.getByRole("status")).toContainText("local demo mode");
+});
+
 test("role dashboards render seeded workflows", async ({ page }) => {
   await page.goto("/creator/dashboard"); await expect(page.getByRole("heading",{name:/Good morning/})).toBeVisible();
   await expect(page.getByRole("link", { name: /View Desk object placement/ })).toBeVisible();
