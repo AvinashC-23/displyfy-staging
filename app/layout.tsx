@@ -1,16 +1,27 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Outfit } from "next/font/google";
+import { Anton, Archivo, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { AppChrome } from "@/components/app-chrome";
 
-const outfit = Outfit({
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  variable: "--font-body",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const anton = Anton({
+  weight: "400",
   subsets: ["latin"],
-  variable: "--font-geist-mono",
+  variable: "--font-display",
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  weight: "400",
+  style: "italic",
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -21,7 +32,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${geistMono.variable}`} data-scroll-behavior="smooth">
+    <html lang="en" className={`${archivo.variable} ${anton.variable} ${instrumentSerif.variable}`} data-scroll-behavior="smooth">
       <body>
         <AppChrome>{children}</AppChrome>
       </body>
