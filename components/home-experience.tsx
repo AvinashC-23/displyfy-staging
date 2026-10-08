@@ -1,14 +1,6 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
 import { ArrowRight, BadgeCheck, BarChart3, Building2, CircleCheck, Eye, ShieldCheck, Sparkles, Target } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 type MissionPreview = {
   id: string;
@@ -16,6 +8,7 @@ type MissionPreview = {
   name: string;
   objective: string;
   accessMode: string;
+  visibility: string;
   requiredVisibilitySeconds: number;
   minimumQualifyingViews: string;
   maximumPayout: string;
@@ -24,71 +17,14 @@ type MissionPreview = {
 const revealCopy = "Creative freedom becomes more valuable when every requirement, approval, performance signal, and payout decision is clear.";
 
 export function HomeExperience({ mission }: { mission: MissionPreview }) {
-  const root = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reducedMotion) return;
-
-    gsap.from(".hero-reveal", {
-      y: 42,
-      opacity: 0,
-      duration: 1.1,
-      stagger: 0.12,
-      ease: "power3.out"
-    });
-
-    gsap.to(".reveal-word", {
-      opacity: 1,
-      stagger: 0.08,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".word-reveal",
-        start: "top 78%",
-        end: "bottom 44%",
-        scrub: 1
-      }
-    });
-
-    const media = gsap.utils.toArray<HTMLElement>(".story-media");
-    media.forEach((item) => {
-      gsap.fromTo(item, { scale: 0.86, opacity: 0.35 }, {
-        scale: 1,
-        opacity: 1,
-        ease: "none",
-        scrollTrigger: { trigger: item, start: "top 88%", end: "center 58%", scrub: 1 }
-      });
-    });
-
-    const desktop = gsap.matchMedia();
-    desktop.add("(min-width: 901px)", () => {
-      ScrollTrigger.create({
-        trigger: ".story-section",
-        start: "top 96px",
-        end: "bottom bottom",
-        pin: ".story-sticky",
-        pinSpacing: false
-      });
-    });
-    return () => desktop.revert();
-  }, { scope: root });
-
-  return <div ref={root} className="home-experience">
+  return <div className="home-experience">
     <section className="hero-v2">
-      <div className="hero-backdrop" aria-hidden>
-        <Image
-          src="/assets/editorial/tech-creator-laptop-sticker.webp"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-        />
-      </div>
+      <div className="hero-backdrop" aria-hidden />
       <div className="hero-ambient" aria-hidden />
       <div className="shell hero-v2-grid">
         <div className="hero-v2-copy">
           <p className="kicker hero-reveal">Creator partnerships, built for both sides</p>
-          <h1 className="hero-reveal">Creator partnerships that perform for both sides.</h1>
+          <h1 className="hero-reveal">Creator partnerships that perform <em>for both sides.</em></h1>
           <p className="hero-v2-intro hero-reveal">Brands get accountable campaigns and creators keep the voice their audience trusts. One clear system for briefs, approvals, performance, and payout.</p>
           <div className="hero-v2-actions hero-reveal">
             <Link className="button acid" href="/brand/access">Launch a brand mission <ArrowRight size={18} aria-hidden /></Link>
@@ -96,7 +32,7 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
           </div>
         </div>
         <div className="hero-portrait hero-reveal">
-          <Image src="/assets/editorial/style-creator-natural-placement.webp" alt="Style creator filming a short video while adjusting an earring" fill priority sizes="(max-width: 900px) 88vw, 42vw" />
+          <Image src="/assets/editorial/style-creator-natural-placement.webp" alt="Style creator filming a short video while adjusting an earring" fill preload sizes="(max-width: 900px) 88vw, 42vw" />
           <div className="portrait-caption"><span>Creative stays human</span><span>Performance stays accountable</span></div>
         </div>
       </div>
@@ -160,7 +96,7 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
       <div className="chapter-heading compact"><p className="kicker">A mission, made concrete</p><h2>Creators see the ask. Brands see the controls.</h2></div>
       <article className="mission-showcase">
         <div className="mission-visual"><Image src="/assets/editorial/tech-creator-laptop-sticker.webp" alt="Tech creator filming at a desk with a subtle laptop placement" fill sizes="(max-width: 900px) 100vw, 52vw" /></div>
-        <div className="mission-content"><div className="mission-brand"><BadgeCheck size={18} /><span>{mission.brandName}</span></div><h3>{mission.name}</h3><p>{mission.objective}</p><dl><div><dt>Visibility</dt><dd>{mission.requiredVisibilitySeconds} seconds</dd></div><div><dt>Qualifying views</dt><dd>{mission.minimumQualifyingViews}</dd></div><div><dt>Maximum payout</dt><dd>{mission.maximumPayout}</dd></div><div><dt>Access</dt><dd>{mission.accessMode}</dd></div></dl><Link className="button acid" href={`/creator/missions/${mission.id}`}>Explore this mission <ArrowRight size={18} /></Link></div>
+        <div className="mission-content"><div className="mission-brand"><BadgeCheck size={18} /><span>{mission.brandName}</span></div><h3>{mission.name}</h3><p>{mission.objective}</p><dl><div><dt>Product visibility</dt><dd>{mission.requiredVisibilitySeconds} seconds</dd></div><div><dt>Qualifying views</dt><dd>{mission.minimumQualifyingViews}</dd></div><div><dt>Maximum payout</dt><dd>{mission.maximumPayout}</dd></div><div><dt>Access</dt><dd>{mission.accessMode}</dd></div><div><dt>Mission visibility</dt><dd>{mission.visibility.replaceAll("_", " ")}</dd></div></dl><Link className="button acid" href={`/creator/missions/${mission.id}`}>Explore this mission <ArrowRight size={18} /></Link></div>
       </article>
     </div></section>
 

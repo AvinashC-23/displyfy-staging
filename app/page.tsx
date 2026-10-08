@@ -10,6 +10,7 @@ export default function HomePage() {
     name: mission.name,
     objective: mission.objective,
     accessMode: mission.accessMode,
+    visibility: mission.visibility,
     requiredVisibilitySeconds: mission.requiredVisibilitySeconds,
     minimumQualifyingViews: mission.minimumQualifyingViews.toLocaleString(),
     maximumPayout: formatMoney(mission.maxPayoutMinor, mission.currency)

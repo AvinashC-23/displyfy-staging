@@ -4,6 +4,24 @@ test("homepage communicates the marketplace", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Creator partnerships that perform for both sides." })).toBeVisible();
   await expect(page.getByRole("link", { name: "Join as a creator" })).toBeVisible();
+  await expect(page.getByText("8 seconds")).toBeVisible();
+  await expect(page.getByText("5,000")).toBeVisible();
+  await expect(page.getByText("$275.00")).toBeVisible();
+  await expect(page.getByText("public summary")).toBeVisible();
+  await page.locator("summary").filter({ hasText: "Does joining guarantee earnings?" }).click();
+  await expect(page.getByText("No. Earnings depend on creator approval, mission eligibility")).toBeVisible();
+});
+
+test("homepage content remains available without JavaScript", async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  await page.goto(`${baseURL}/`);
+  await expect(page.getByRole("heading", { name: "Creator partnerships that perform for both sides." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Creators see the ask. Brands see the controls." })).toBeVisible();
+  await expect(page.getByText("public summary")).toBeVisible();
+
+  await context.close();
 });
 
 test("creator application validates and enters demo review", async ({ page }) => {
