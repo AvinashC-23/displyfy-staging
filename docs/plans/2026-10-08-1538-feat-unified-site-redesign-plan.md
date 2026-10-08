@@ -267,7 +267,7 @@ flowchart TB
   - The mission showcase displays the existing mission name, access mode, visibility, view threshold, and payout rather than static archive examples.
   - The desktop and mobile screenshots retain the grid, type hierarchy, lime/violet accents, rounded media, and intended stacking without clipped text.
   - FAQ controls work by keyboard and remain readable when all motion is disabled or scroll-driven animation is unsupported.
-  - Only the selected first-viewport image receives the LCP hint; below-the-fold homepage media retains lazy loading and accurate `sizes`.
+  - Because the homepage headline is the measured LCP element, editorial media retains native lazy loading and accurate `sizes`; routes with a true first-viewport image LCP may use one deliberate hint.
 - **Verification:** `components/home-experience.tsx` has no client directive or GSAP import, semantic homepage tests pass at both viewports, and anchor screenshots are approved against the supplied design.
 
 ### U4. Build Creator and Brand Entry Families
@@ -338,7 +338,7 @@ flowchart TB
 - **Test scenarios:**
   - The dependency graph and built client chunks contain no GSAP or `@gsap/react` module.
   - Anchor pages render all content with JavaScript disabled except explicitly interactive controls.
-  - A first homepage navigation does not request below-the-fold images before they approach the viewport, while the chosen LCP image begins promptly.
+  - A first homepage navigation does not request editorial images before they approach the viewport, and any route-level LCP image hint is limited to one justified image.
   - A route transition from the public navigation reaches the new page without a full document reload even where measured prefetch opt-outs are retained.
   - Repository searches find no references to removed public files, deprecated image priority props, or deleted motion wrappers.
 - **Verification:** Initial homepage client JavaScript is lower than the checkpoint, the production output excludes removed tracked media, the lab thresholds in R13 pass or the remaining regression is documented and fixed before proceeding.
