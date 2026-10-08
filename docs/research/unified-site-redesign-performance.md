@@ -29,4 +29,13 @@ npx --yes lighthouse@13.5.0 http://127.0.0.1:3200 --only-categories=performance 
 
 ## Final redesign
 
-To be recorded after the verified production build.
+Measured on the verified production build with the same Lighthouse 13.5.0 contract.
+
+| Viewport | Performance | LCP | CLS | Total transfer | Script transfer | Image transfer | Script requests | Image requests |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Mobile | 99 | 2,139 ms | 0 | 396,538 B | 257,122 B | 97,741 B | 12 | 6 |
+| Desktop | 100 | 502 ms | 0 | 430,340 B | 257,122 B | 131,543 B | 12 | 7 |
+
+Compared with the checkpoint, initial JavaScript fell by 51,374 B (16.7%) and two script requests at both viewports. Mobile image transfer fell by 97,533 B (49.9%), total transfer fell by 197,394 B (33.2%), and simulated mobile LCP improved by 1,392 ms (39.4%). Desktop total transfer fell by 166,164 B (27.9%). Both viewports meet the score, LCP, and CLS gates.
+
+The final image policy uses native lazy loading for homepage editorial media, an eager lightweight SVG logo, accurate responsive candidates, and quality 50 only for the three images Chrome requests during the initial mobile navigation. The 828 px mobile candidates still provide more than 2× pixel density at the 375 px test viewport while avoiding 1080 px transfers. Measured desktop navigation prefetching added roughly 136 KB of route JavaScript before interaction, so primary navigation links deliberately opt out; clicks still use Next.js client transitions and retain the in-page runtime.

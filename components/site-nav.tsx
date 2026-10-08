@@ -26,16 +26,16 @@ export function SiteNav() {
   return (
     <div className="nav-wrap shell">
       <nav className="nav" aria-label="Primary navigation">
-        <Link href="/" aria-label="Displyfy home"><Image className="logo" src="/brand/displyfy-logo-v3.svg" alt="Displyfy" width={342} height={87} style={{ width: 142, height: "auto" }} /></Link>
+        <Link href="/" aria-label="Displyfy home"><Image className="logo" src="/brand/displyfy-logo-v3.svg" alt="Displyfy" width={342} height={87} loading="eager" style={{ width: 142, height: "auto" }} /></Link>
         <div className="nav-links">
           <div className="nav-sections">
-            {links.map(({ label, href, matches }) => <Link className={isActive(matches) ? "active" : ""} aria-current={isActive(matches) ? "page" : undefined} key={href} href={href}>{label}</Link>)}
+            {links.map(({ label, href, matches }) => <Link className={isActive(matches) ? "active" : ""} aria-current={isActive(matches) ? "page" : undefined} key={href} href={href} prefetch={false}>{label}</Link>)}
           </div>
           <details className="nav-access">
             <summary><CircleUserRound size={17} aria-hidden /><span>Sign in</span><ChevronDown size={15} aria-hidden /></summary>
-            <div className="nav-access-menu">{accessLinks.map(({ label, href }) => <Link key={href} href={href}>{label}</Link>)}</div>
+            <div className="nav-access-menu">{accessLinks.map(({ label, href }) => <Link key={href} href={href} prefetch={false}>{label}</Link>)}</div>
           </details>
-          <Link className="button small" href="/creator/apply">Join as creator</Link>
+          <Link className="button small" href="/creator/apply" prefetch={false}>Join as creator</Link>
         </div>
         <button className="menu-button" type="button" aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} onClick={() => setOpen(!open)}>
           {open ? <X aria-hidden size={24} /> : <Menu aria-hidden size={24} />}
@@ -43,9 +43,9 @@ export function SiteNav() {
       </nav>
       {open && <div className="nav-panel" aria-label="Mobile navigation">
         <p className="nav-panel-label">Explore Displyfy</p>
-        {links.map(({ label, href, matches }) => <Link className={isActive(matches) ? "active" : ""} aria-current={isActive(matches) ? "page" : undefined} key={href} href={href} onClick={() => setOpen(false)}>{label}</Link>)}
-        <div className="nav-panel-access">{accessLinks.map(({ label, href }) => <Link key={href} href={href} onClick={() => setOpen(false)}>{label}</Link>)}</div>
-        <Link className="button" href="/creator/apply" onClick={() => setOpen(false)}>Join as creator</Link>
+        {links.map(({ label, href, matches }) => <Link className={isActive(matches) ? "active" : ""} aria-current={isActive(matches) ? "page" : undefined} key={href} href={href} prefetch={false} onClick={() => setOpen(false)}>{label}</Link>)}
+        <div className="nav-panel-access">{accessLinks.map(({ label, href }) => <Link key={href} href={href} prefetch={false} onClick={() => setOpen(false)}>{label}</Link>)}</div>
+        <Link className="button" href="/creator/apply" prefetch={false} onClick={() => setOpen(false)}>Join as creator</Link>
       </div>}
     </div>
   );

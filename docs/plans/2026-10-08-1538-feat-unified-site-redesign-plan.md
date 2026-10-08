@@ -57,7 +57,7 @@ The current code already centralizes the main page families, but page-wide GSAP 
 **Performance and maintainability**
 
 - R7. Keep Server Components as the default and ship client JavaScript only for navigation toggles, authentication, validated forms, filters, MFA, and other real browser interactions.
-- R8. Use `next/font` and `next/image` according to the bundled Next.js 16.3.4 guidance, with at most one deliberate LCP image hint on routes where first-viewport media warrants it and lazy defaults for non-critical media.
+- R8. Use a zero-request system font stack and `next/image` according to the bundled Next.js 16.3.4 guidance, with at most one deliberate LCP image hint on routes where first-viewport media warrants it and lazy defaults for non-critical media.
 - R9. Reuse existing shared page and workspace components before creating new ones, and add no design, animation, state, or lazy-loading dependency unless the existing platform cannot meet a verified requirement.
 - R10. Remove unused animation dependencies, dead visual wrappers, and tracked public media that no route references; leave untracked source candidates outside commits and do not delete the user's local originals.
 
@@ -134,7 +134,7 @@ The current code already centralizes the main page families, but page-wide GSAP 
 - KTD2. **Use one token layer with temporary compatibility aliases.** Introduce the reference palette, typography, radii, grid, and motion values at `:root`, map current semantic colors onto them during rollout, then remove aliases that no retained component uses. This permits route-by-route conversion without duplicating themes.
 - KTD3. **Replace GSAP with progressive CSS motion.** Use keyframes, transforms, native scrolling, `@supports (animation-timeline: view())`, and `prefers-reduced-motion`; keep all content visible when scroll-driven animation is unsupported. The reference already proves this design can work without an animation runtime.
 - KTD4. **Keep interaction islands narrow.** Convert marketing page bodies back to Server Components and retain Client Components only where existing event handlers, browser APIs, or form state require them. Do not dynamically import static Server Components or split tiny controls whose cost is lower than the loading boundary.
-- KTD5. **Use the installed Next.js media path.** Load Anton, Archivo, and Instrument Serif through `next/font`, replace deprecated `priority` usage, give only the unambiguous LCP image `preload` or `fetchPriority="high"`, preserve accurate `sizes`, and leave other images on the native lazy default.
+- KTD5. **Use the installed Next.js media path with zero font requests.** Express the reference's display, serif, and utility hierarchy through system font stacks, replace deprecated `priority` usage, give only an unambiguous LCP image `preload` or `fetchPriority="high"`, preserve accurate `sizes`, and leave other images on the native lazy default. Production measurement favored this over bundled webfonts because it removed font payload without regressing CLS or the approved hierarchy.
 - KTD6. **Reuse page families rather than route-specific clones.** `InfoPage`, `LoginPage`, existing form components, mission components, and workspace components remain the reuse boundaries; new shared components are added only when at least two route families need the same markup and behavior. (session-settled: user-approved — chosen over bespoke layouts for every undesigned route: the user approved a single system derived from the three anchors.)
 - KTD7. **Measure before adding optimization machinery.** Use the clean checkpoint as the bundle and lab-performance baseline, remove known waste first, and add no cache, observer, route restructure, or dynamic import unless the comparison identifies a remaining bottleneck. (session-settled: user-approved — chosen over blanket lazy loading: critical content must remain immediate and optimization claims must be measurable.)
 - KTD8. **Checkpoint on the current branch without force.** Commit the intended current state and this plan, push `feat/creator-editorial-imagery`, and leave `main` unchanged before the first redesign edit. (session-settled: user-directed — chosen over pushing directly to `main` or force-updating history: the current work needs a recoverable remote checkpoint.)
@@ -196,7 +196,7 @@ flowchart TB
 
 - **Users:** Public and authenticated surfaces change visually, but available actions and state transitions remain the same.
 - **Client runtime:** Marketing animation JavaScript and two dependencies disappear; remaining JavaScript is limited to existing interactive controls.
-- **Static delivery:** Font requests become self-hosted through Next.js, non-critical images retain native lazy loading, and unreferenced tracked media leave the public output.
+- **Static delivery:** The design uses zero-request system font stacks, non-critical images retain native lazy loading, and unreferenced tracked media leave the public output.
 - **Security and data:** No auth, RLS, API, schema, or provider boundary changes; regression coverage confirms the UI still reaches the same handlers.
 - **Developers:** New UI work uses the shared tokens and page-family components instead of copying inline styles from the archive.
 
@@ -204,7 +204,7 @@ flowchart TB
 
 - **Static export claims conflict with the MVP:** keep Displyfy copy and `README.md` limitations authoritative; never port placeholder authentication, automated metrics, or payout claims.
 - **Global CSS changes regress distant routes:** convert by shared page family, retain temporary semantic aliases, and run the route matrix at both viewports after each family.
-- **Display fonts increase transfer or layout shift:** use `next/font` with the required styles and weights only, then verify rendered headings and CLS in the production build.
+- **Display typography drifts across platforms:** use deliberate system fallbacks, keep visual baselines calibrated to the design-review host, and verify headings plus CLS in the production build.
 - **Scroll-driven CSS is not universal:** render the final state by default and place motion only inside feature detection and reduced-motion guards.
 - **Visual snapshots become noisy:** keep snapshots only for stable anchor regions and pair them with semantic assertions so small font rasterization differences do not hide behavioral regressions.
 - **The dirty checkpoint accidentally absorbs source assets:** stage from an explicit intended-file list, inspect the staged diff, and leave untracked candidates untouched.
@@ -240,10 +240,10 @@ flowchart TB
 - **Dependencies:** U1.
 - **Files:** `app/layout.tsx`, `app/globals.css`, `components/site-nav.tsx`, `components/footer.tsx`, `e2e/displyfy.spec.ts`.
 - **Approach:**
-  1. Replace Outfit and the unused mono treatment with the three reference font families through `next/font`, limited to required styles and weights.
+  1. Replace Outfit and the unused mono treatment with zero-request system stacks that preserve the reference's display, serif, and utility hierarchy.
   2. Add semantic design tokens and temporary aliases for current color names, then define shared typography, glass, grid, pill, card, form, status, and motion primitives.
   3. Restyle the existing navigation and footer with the shared primitives while keeping route labels, destinations, active-state semantics, and the small mobile-menu client island.
-  4. Restore default Next.js prefetching for primary navigation and CTA links; retain opt-outs only where repeated dynamic lists would create needless requests.
+  4. Measure Next.js prefetching on primary navigation and CTA links, retaining it only where its before-interaction route payload is justified. The final primary navigation opts out after measurement showed roughly 136 KB of otherwise unused route JavaScript, while verified clicks still use client transitions.
 - **Execution note:** Treat this as styling and framework configuration; prove it first with a production smoke render and the existing navigation assertions.
 - **Patterns to follow:** `app/globals.css` single-entry styling model, `components/site-nav.tsx` active-route behavior, `components/footer.tsx`, and the archive token file.
 - **Test scenarios:**
@@ -251,7 +251,7 @@ flowchart TB
   - At 375px, the menu opens and closes, exposes every primary destination, reports `aria-expanded`, and produces no horizontal overflow.
   - Keyboard focus remains visible on links, buttons, summaries, inputs, and menu controls against dark, lime, violet, and light surfaces.
   - With reduced motion, token-driven animation classes render content without looping or reveal transitions.
-- **Verification:** Fonts are served by Next.js rather than browser requests to Google, shared controls render consistently on one public and one workspace page, and no existing navigation test regresses.
+- **Verification:** The production page initiates no webfont request, shared controls render consistently on one public and one workspace page, and no existing navigation test regresses.
 
 ### U3. Rebuild the Homepage Anchor as a Server Composition
 
@@ -339,7 +339,7 @@ flowchart TB
   - The dependency graph and built client chunks contain no GSAP or `@gsap/react` module.
   - Anchor pages render all content with JavaScript disabled except explicitly interactive controls.
   - A first homepage navigation does not request below-the-fold images before they approach the viewport, while the chosen LCP image begins promptly.
-  - A route transition from the public navigation uses Next.js prefetching and reaches the new page without a full document reload.
+  - A route transition from the public navigation reaches the new page without a full document reload even where measured prefetch opt-outs are retained.
   - Repository searches find no references to removed public files, deprecated image priority props, or deleted motion wrappers.
 - **Verification:** Initial homepage client JavaScript is lower than the checkpoint, the production output excludes removed tracked media, the lab thresholds in R13 pass or the remaining regression is documented and fixed before proceeding.
 

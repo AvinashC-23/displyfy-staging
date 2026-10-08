@@ -24,6 +24,50 @@ test("homepage content remains available without JavaScript", async ({ browser, 
   await context.close();
 });
 
+test("anchor compositions remain visually stable", async ({ page }) => {
+  test.skip(process.platform !== "darwin", "Visual baselines are calibrated on the design-review host.");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const [path, name] of [
+    ["/", "homepage-anchor"],
+    ["/creator/login", "creator-login-anchor"],
+    ["/brand/login", "brand-login-anchor"]
+  ] as const) {
+    await page.goto(path);
+    await page.evaluate(() => document.fonts.ready);
+    await expect(page).toHaveScreenshot(`${name}.png`, { animations: "disabled", caret: "hide" });
+  }
+});
+
+test("reduced motion keeps marketing content visible", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await expect(page.locator(".hero-v2-copy")).toBeVisible();
+  await expect(page.locator(".mission-showcase")).toBeVisible();
+
+  await page.goto("/for-creators");
+  await expect(page.locator(".route-hero-copy")).toBeVisible();
+  await expect(page.locator(".route-hero-art")).toBeVisible();
+});
+
+test("primary navigation uses a client route transition", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => { (window as typeof window & { __displyfyMarker?: string }).__displyfyMarker = "preserved"; });
+  const mobile = page.viewportSize()!.width < 900;
+  if (mobile) await page.getByRole("button", { name: "Open navigation menu" }).click();
+  const navigation = mobile ? page.getByLabel("Mobile navigation") : page.getByLabel("Primary navigation");
+  await navigation.getByRole("link", { name: "How it works", exact: true }).click();
+  await expect(page).toHaveURL(/\/how-it-works$/);
+  await expect.poll(() => page.evaluate(() => (window as typeof window & { __displyfyMarker?: string }).__displyfyMarker)).toBe("preserved");
+});
+
+test("homepage keeps editorial media lazy", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".logo")).toHaveAttribute("loading", "eager");
+  for (const image of await page.locator(".hero-portrait img, .story-media img, .accordion-bg img").all()) {
+    await expect(image).toHaveAttribute("loading", "lazy");
+  }
+});
+
 test("creator application validates and enters demo review", async ({ page }) => {
   await page.goto("/creator/apply");
   await page.getByLabel("Full legal name").fill("Maya Rao"); await page.getByLabel("Display name").fill("Maya Desk");
@@ -112,6 +156,8 @@ test("creator can update account details in demo mode", async ({ page }) => {
 test("creator browses, opens, and applies to a mission", async ({ page }) => {
   await page.goto("/creator/missions");
   await expect(page.getByRole("heading", { name: "Find work that fits your content." })).toBeVisible();
+  await page.getByPlaceholder("Search by brand, product, or brief").fill("no matching mission");
+  await expect(page.getByRole("heading", { name: "No missions match that search." })).toBeVisible();
   await page.getByPlaceholder("Search by brand, product, or brief").fill("ceramic");
   await page.getByRole("link", { name: /View Desk object placement/ }).click();
   await expect(page).toHaveURL(/\/creator\/missions\/7fa93180/);
@@ -136,7 +182,12 @@ test("brand mission back navigation keeps the current workspace", async ({ page 
 });
 
 test("primary pages do not overflow the viewport", async ({ page }) => {
-  for (const path of ["/", "/for-creators", "/for-brands", "/creator/dashboard", "/creator/missions", "/creator/account", "/brand/dashboard", "/admin"]) {
+  for (const path of [
+    "/", "/how-it-works", "/for-creators", "/for-brands",
+    "/creator/apply", "/creator/login", "/creator/dashboard", "/creator/missions", "/creator/missions/7fa93180-4c69-40f2-8984-7a3f28506b3a", "/creator/account",
+    "/brand/access", "/brand/login", "/brand/dashboard", "/brand/missions/new", "/brand/missions/7fa93180-4c69-40f2-8984-7a3f28506b3a",
+    "/admin/login", "/admin/mfa", "/admin", "/privacy", "/terms", "/advertising-disclosure", "/missing-page"
+  ]) {
     await page.goto(path);
     await page.waitForLoadState("networkidle");
     const sizes = await page.evaluate(() => ({ viewport: document.documentElement.clientWidth, content: document.documentElement.scrollWidth }));

@@ -6,6 +6,7 @@ const developmentScripts = `${productionScripts} 'unsafe-eval'`;
 const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR ?? ".next",
   poweredByHeader: false,
+  images: { qualities: [50, 75] },
   allowedDevOrigins: ["127.0.0.1"],
   experimental: {
     serverActions: {

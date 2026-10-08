@@ -24,7 +24,7 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
       <div className="shell hero-v2-grid">
         <div className="hero-v2-copy">
           <p className="kicker hero-reveal">Creator partnerships, built for both sides</p>
-          <h1 className="hero-reveal">Creator partnerships that perform <em>for both sides.</em></h1>
+          <h1>Creator partnerships that perform <em>for both sides.</em></h1>
           <p className="hero-v2-intro hero-reveal">Brands get accountable campaigns and creators keep the voice their audience trusts. One clear system for briefs, approvals, performance, and payout.</p>
           <div className="hero-v2-actions hero-reveal">
             <Link className="button acid" href="/brand/access">Launch a brand mission <ArrowRight size={18} aria-hidden /></Link>
@@ -32,7 +32,7 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
           </div>
         </div>
         <div className="hero-portrait hero-reveal">
-          <Image src="/assets/editorial/style-creator-natural-placement.webp" alt="Style creator filming a short video while adjusting an earring" fill preload sizes="(max-width: 900px) 88vw, 42vw" />
+          <Image src="/assets/editorial/style-creator-natural-placement.webp" alt="Style creator filming a short video while adjusting an earring" fill quality={50} sizes="(max-width: 640px) 82vw, (max-width: 900px) 88vw, 42vw" />
           <div className="portrait-caption"><span>Creative stays human</span><span>Performance stays accountable</span></div>
         </div>
       </div>
@@ -51,7 +51,7 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
             <div className="bento-proof"><CircleCheck size={18} /><span>Every payout traces back to verified performance</span></div>
           </article>
           <article className="bento-card bento-image">
-            <Image src="/assets/editorial/cooking-creator-natural-placement.webp" alt="Cooking creator filming a recipe with a product on the counter" fill sizes="(max-width: 900px) 100vw, 42vw" />
+            <Image src="/assets/editorial/cooking-creator-natural-placement.webp" alt="Cooking creator filming a recipe with a product on the counter" fill quality={50} sizes="(max-width: 640px) 82vw, (max-width: 900px) 100vw, 42vw" />
             <div className="image-wash" />
             <div className="bento-image-copy"><Sparkles size={24} /><h3>Brand presence that still feels native.</h3></div>
           </article>
@@ -71,7 +71,7 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
         </div>
         <div className="story-stack">
           <article className="story-card">
-            <div className="story-media"><Image src="/assets/editorial/creator-collaboration-editing.webp" alt="Two creators reviewing a video together at a worktable" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
+            <div className="story-media"><Image src="/assets/editorial/creator-collaboration-editing.webp" alt="Two creators reviewing a video together at a worktable" fill quality={50} sizes="(max-width: 640px) 82vw, (max-width: 900px) 100vw, 50vw" /></div>
             <div className="story-copy"><BadgeCheck size={25} /><h3>Know what you are funding.</h3><p>Brands define measurable missions with capacity, budget, brand-safety, creator criteria, and a documented verification path.</p><Link href="/for-brands">For brands <ArrowRight size={17} /></Link></div>
           </article>
           <article className="story-card">
