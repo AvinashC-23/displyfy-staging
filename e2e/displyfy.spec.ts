@@ -77,6 +77,22 @@ test("role dashboards render seeded workflows", async ({ page }) => {
   await page.goto("/admin"); await expect(page.getByRole("heading",{name:/Review what needs a decision/})).toBeVisible();
 });
 
+test("legal and system pages use the shared shell", async ({ page }) => {
+  for (const [path, heading] of [
+    ["/privacy", "Privacy Policy"],
+    ["/terms", "Terms of Service"],
+    ["/advertising-disclosure", "Advertising Disclosure"],
+    ["/missing-page", "That page is not here."]
+  ] as const) {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { name: heading })).toBeVisible();
+  }
+
+  await page.goto("/admin/mfa");
+  await expect(page.getByRole("heading", { name: "Protect every reviewed decision." })).toBeVisible();
+  await expect(page.getByRole("status")).toContainText(/Authentication is not configured|Preparing secure verification|Verification factors could not be loaded/);
+});
+
 test("navigation derives its active section from the current route", async ({ page }) => {
   await page.goto("/for-creators");
   if (page.viewportSize()!.width < 900) await page.getByRole("button", { name: "Open navigation menu" }).click();

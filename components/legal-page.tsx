@@ -1,1 +1,6 @@
-export function LegalPage({ title, updated, children }: { title: string; updated: string; children: React.ReactNode }) { return <><section className="page-hero"><div className="shell"><p className="eyebrow">Displyfy policy</p><h1>{title}</h1><p>Last updated {updated}</p></div></section><section className="band white"><article className="shell" style={{ maxWidth: 820, lineHeight: 1.75 }}>{children}</article></section></>; }
+export function LegalPage({ title, updated, children }: { title: string; updated: string; children: React.ReactNode }) {
+  return <>
+    <section className="page-hero legal-hero"><div className="shell"><p className="eyebrow">Displyfy policy</p><h1>{title}</h1><p>Last updated {updated}</p></div></section>
+    <section className="band white"><article className="shell legal-copy">{children}</article></section>
+  </>;
+}
