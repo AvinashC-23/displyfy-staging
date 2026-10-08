@@ -5,8 +5,8 @@ export default function Page() {
     eyebrow="How Displyfy works"
     title="From a clear placement brief to verified creator value."
     intro="Displyfy makes paid product visibility easier to understand for creators and easier to account for across brand teams."
-    image="/assets/illustrations/verified-performance.webp"
-    imageAlt="Illustration showing creator content progressing through verified milestones to payout"
+    image="/assets/editorial/tech-creator-laptop-sticker.webp"
+    imageAlt="Tech creator recording a video beside an open laptop"
     cta={{ label: "Explore creator missions", href: "/creator/missions" }}
     secondaryCta={{ label: "Request brand access", href: "/brand/access" }}
     sections={[

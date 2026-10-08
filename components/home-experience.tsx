@@ -77,7 +77,7 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
     <section className="hero-v2">
       <div className="hero-backdrop" aria-hidden>
         <Image
-          src="/images/hero-creator-camera.jpg"
+          src="/assets/editorial/tech-creator-laptop-sticker.webp"
           alt=""
           fill
           priority
@@ -96,7 +96,7 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
           </div>
         </div>
         <div className="hero-portrait hero-reveal">
-          <Image src="/images/creator-ring-light.jpg" alt="Creator filming short-form content with a phone and ring light" fill priority sizes="(max-width: 900px) 88vw, 42vw" />
+          <Image src="/assets/editorial/style-creator-natural-placement.webp" alt="Style creator filming a short video while adjusting an earring" fill priority sizes="(max-width: 900px) 88vw, 42vw" />
           <div className="portrait-caption"><span>Creative stays human</span><span>Performance stays accountable</span></div>
         </div>
       </div>
@@ -115,7 +115,7 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
             <div className="bento-proof"><CircleCheck size={18} /><span>Every payout traces back to verified performance</span></div>
           </article>
           <article className="bento-card bento-image">
-            <Image src="/assets/illustrations/creator-product-placement.webp" alt="Illustration of a creator filming a natural product placement" fill sizes="(max-width: 900px) 100vw, 42vw" />
+            <Image src="/assets/editorial/cooking-creator-natural-placement.webp" alt="Cooking creator filming a recipe with a product on the counter" fill sizes="(max-width: 900px) 100vw, 42vw" />
             <div className="image-wash" />
             <div className="bento-image-copy"><Sparkles size={24} /><h3>Brand presence that still feels native.</h3></div>
           </article>
@@ -135,15 +135,15 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
         </div>
         <div className="story-stack">
           <article className="story-card">
-            <div className="story-media"><Image src="/assets/illustrations/brand-content-review.webp" alt="Illustration of a brand team reviewing creator content" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
+            <div className="story-media"><Image src="/assets/editorial/creator-collaboration-editing.webp" alt="Two creators reviewing a video together at a worktable" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
             <div className="story-copy"><BadgeCheck size={25} /><h3>Know what you are funding.</h3><p>Brands define measurable missions with capacity, budget, brand-safety, creator criteria, and a documented verification path.</p><Link href="/for-brands">For brands <ArrowRight size={17} /></Link></div>
           </article>
           <article className="story-card">
-            <div className="story-media"><Image src="/assets/illustrations/fitness-creator.webp" alt="Illustration of a creator filming lifestyle content at home" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
+            <div className="story-media"><Image src="/assets/editorial/fitness-creator-balcony.webp" alt="Fitness creator filming a mobility routine on a balcony" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
             <div className="story-copy"><Target size={25} /><h3>Choose work that fits.</h3><p>Creators can assess the placement, creative restrictions, timeline, disclosure, and payout potential before accepting current terms.</p><Link href="/for-creators">For creators <ArrowRight size={17} /></Link></div>
           </article>
           <article className="story-card">
-            <div className="story-media"><Image src="/assets/illustrations/verified-performance.webp" alt="Illustration of verified content performance and payout milestones" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
+            <div className="story-media"><Image src="/assets/editorial/tech-creator-laptop-sticker.webp" alt="Tech creator filming a video beside an open laptop" fill sizes="(max-width: 900px) 100vw, 50vw" /></div>
             <div className="story-copy"><Eye size={25} /><h3>Trust the trail.</h3><p>Admin review, metric source, status history, payout eligibility, and manual payment references remain auditable.</p><Link href="/how-it-works">How verification works <ArrowRight size={17} /></Link></div>
           </article>
         </div>
@@ -153,13 +153,13 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
     <section className="chapter word-reveal-chapter"><div className="shell word-reveal">
       <p className="kicker">The operating principle</p>
       <p className="reveal-statement">{revealCopy.split(" ").map((word, index) => <span className="reveal-word" key={`${word}-${index}`}>{word}{" "}</span>)}</p>
-      <div className="inline-visual" aria-hidden><Image src="/assets/illustrations/creator-editing.webp" alt="" fill sizes="240px" /></div>
+      <div className="inline-visual" aria-hidden><Image src="/assets/editorial/travel-creator-bookshop-cafe.webp" alt="" fill sizes="240px" /></div>
     </div></section>
 
     <section className="chapter mission-chapter"><div className="shell">
       <div className="chapter-heading compact"><p className="kicker">A mission, made concrete</p><h2>Creators see the ask. Brands see the controls.</h2></div>
       <article className="mission-showcase">
-        <div className="mission-visual"><Image src="/assets/illustrations/creator-product-placement.webp" alt="Illustration of a creator filming a product placement" fill sizes="(max-width: 900px) 100vw, 52vw" /></div>
+        <div className="mission-visual"><Image src="/assets/editorial/tech-creator-laptop-sticker.webp" alt="Tech creator filming at a desk with a subtle laptop placement" fill sizes="(max-width: 900px) 100vw, 52vw" /></div>
         <div className="mission-content"><div className="mission-brand"><BadgeCheck size={18} /><span>{mission.brandName}</span></div><h3>{mission.name}</h3><p>{mission.objective}</p><dl><div><dt>Visibility</dt><dd>{mission.requiredVisibilitySeconds} seconds</dd></div><div><dt>Qualifying views</dt><dd>{mission.minimumQualifyingViews}</dd></div><div><dt>Maximum payout</dt><dd>{mission.maximumPayout}</dd></div><div><dt>Access</dt><dd>{mission.accessMode}</dd></div></dl><Link className="button acid" href={`/creator/missions/${mission.id}`}>Explore this mission <ArrowRight size={18} /></Link></div>
       </article>
     </div></section>
@@ -167,9 +167,9 @@ export function HomeExperience({ mission }: { mission: MissionPreview }) {
     <section className="chapter accordion-chapter"><div className="shell">
       <div className="chapter-heading compact"><p className="kicker">Built into every campaign</p><h2>Confidence expands when the details are visible.</h2></div>
       <div className="horizontal-accordion">
-        <article tabIndex={0}><div className="accordion-bg"><Image src="/assets/illustrations/paid-partnership.webp" alt="Illustration of transparent paid partnership content" fill sizes="(max-width: 760px) 100vw, 34vw" /></div><div className="accordion-copy"><span>Clear briefs</span><p>Placement and disclosure requirements are explicit before acceptance.</p></div></article>
-        <article tabIndex={0}><div className="accordion-bg"><Image src="/assets/illustrations/verified-performance.webp" alt="Illustration of verified campaign milestones" fill sizes="(max-width: 760px) 100vw, 34vw" /></div><div className="accordion-copy"><span>Measured outcomes</span><p>Metrics are tied to a source and a defined campaign window.</p></div></article>
-        <article tabIndex={0}><div className="accordion-bg"><Image src="/assets/illustrations/brand-content-review.webp" alt="Illustration of a brand team reviewing creator content" fill sizes="(max-width: 760px) 100vw, 34vw" /></div><div className="accordion-copy"><span>Human review</span><p>Consequential approvals and payout decisions remain accountable.</p></div></article>
+        <article tabIndex={0}><div className="accordion-bg"><Image src="/assets/editorial/cooking-creator-natural-placement.webp" alt="Cooking creator filming with a product naturally in frame" fill sizes="(max-width: 760px) 100vw, 34vw" /></div><div className="accordion-copy"><span>Clear briefs</span><p>Placement and disclosure requirements are explicit before acceptance.</p></div></article>
+        <article tabIndex={0}><div className="accordion-bg"><Image src="/assets/editorial/fitness-creator-balcony.webp" alt="Fitness creator filming a routine beside a placed product" fill sizes="(max-width: 760px) 100vw, 34vw" /></div><div className="accordion-copy"><span>Measured outcomes</span><p>Metrics are tied to a source and a defined campaign window.</p></div></article>
+        <article tabIndex={0}><div className="accordion-bg"><Image src="/assets/editorial/creator-collaboration-editing.webp" alt="Creators reviewing footage at a worktable" fill sizes="(max-width: 760px) 100vw, 34vw" /></div><div className="accordion-copy"><span>Human review</span><p>Consequential approvals and payout decisions remain accountable.</p></div></article>
       </div>
     </div></section>
 

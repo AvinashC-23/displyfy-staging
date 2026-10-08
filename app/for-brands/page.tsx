@@ -5,8 +5,8 @@ export default function Page() {
     eyebrow="For brands"
     title="Put the product inside stories people chose to watch."
     intro="Turn a campaign idea into a creator-ready mission with visible controls, reviewable content, and accountable performance."
-    image="/assets/illustrations/brand-content-review.webp"
-    imageAlt="Illustration of a brand team reviewing vertical creator videos"
+    image="/assets/editorial/creator-collaboration-editing.webp"
+    imageAlt="Two creators reviewing a video together at a worktable"
     cta={{ label: "Request brand access", href: "/brand/access" }}
     secondaryCta={{ label: "See how verification works", href: "/how-it-works" }}
     sections={[

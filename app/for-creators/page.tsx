@@ -5,8 +5,9 @@ export default function Page() {
     eyebrow="For creators"
     title="Keep your format. Choose better partnerships."
     intro="Discover paid product-placement missions that fit your audience, your categories, and the way you already create."
-    image="/assets/illustrations/creator-product-placement.webp"
-    imageAlt="Illustration of a creator filming a natural product placement"
+    image="/assets/editorial/travel-creator-bookshop-cafe.webp"
+    imageAlt="Lifestyle creator filming in a bookshop café with a product nearby"
+    imagePosition="22% center"
     cta={{ label: "Apply as a creator", href: "/creator/apply" }}
     secondaryCta={{ label: "Browse demo missions", href: "/creator/missions" }}
     sections={[

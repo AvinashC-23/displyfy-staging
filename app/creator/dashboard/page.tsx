@@ -29,7 +29,7 @@ export default async function Page() {
 
     <section className="next-step">
       <div className="next-step-copy"><span className="next-step-icon"><Compass size={23} /></span><p className="workspace-kicker">Your next move</p><h2>Choose a mission before planning the content.</h2><p>You have {eligible.length} opportunities that match your profile. Every brief includes the creative ask, disclosure, dates, and payout milestones.</p><Link className="button acid" href="/creator/missions">Browse matching missions <ArrowRight size={18} /></Link></div>
-      <div className="next-step-art"><Image src="/assets/illustrations/paid-partnership.webp" alt="Illustration of transparent paid partnership content on a phone" fill priority sizes="(max-width: 900px) 100vw, 48vw" /></div>
+      <div className="next-step-art"><Image src="/assets/editorial/fitness-creator-balcony.webp" alt="Fitness creator filming a routine beside a placed product" fill priority sizes="(max-width: 900px) 100vw, 48vw" /></div>
     </section>
 
     <section className="workspace-section">
