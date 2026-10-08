@@ -5,11 +5,11 @@ import { formatMoney } from "@/lib/domain";
 import { formatMissionDate, getMissionAvailability, getMissionImage } from "@/lib/mission-presentation";
 import type { Mission } from "@/lib/types";
 
-export function MissionTile({ mission, hrefBase = "/creator/missions", priority = false }: { mission: Mission; hrefBase?: string; priority?: boolean }) {
+export function MissionTile({ mission, hrefBase = "/creator/missions" }: { mission: Mission; hrefBase?: string }) {
   const availability = getMissionAvailability(mission);
   return <Link className="mission-tile" href={`${hrefBase}/${mission.id}`} aria-label={`View ${mission.name}`}>
     <div className="mission-tile-media">
-      <Image src={getMissionImage(mission)} alt="" fill priority={priority} sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+      <Image src={getMissionImage(mission)} alt="" fill sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />
       <span className={`availability ${availability.available ? "is-open" : ""}`}>{availability.label}</span>
       <span className="tile-category">{mission.category}</span>
     </div>

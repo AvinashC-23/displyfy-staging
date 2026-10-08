@@ -20,6 +20,6 @@ export function MissionCatalog({ missions }: { missions: Mission[] }) {
       <label className="catalog-search"><Search size={18} aria-hidden /><span className="sr-only">Search missions</span><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Search by brand, product, or brief" /></label>
       <div className="category-filter" aria-label="Filter by category"><SlidersHorizontal size={17} aria-hidden />{categories.map(item => <button className={category === item ? "active" : ""} type="button" key={item} onClick={() => setCategory(item)}>{item}</button>)}</div>
     </div>
-    {visible.length > 0 ? <div className="mission-grid">{visible.map((mission, index) => <MissionTile mission={mission} key={mission.id} priority={index < 3} />)}</div> : <div className="empty-state"><h2>No missions match that search.</h2><p>Try another product, brand, or category.</p></div>}
+    {visible.length > 0 ? <div className="mission-grid">{visible.map((mission) => <MissionTile mission={mission} key={mission.id} />)}</div> : <div className="empty-state"><h2>No missions match that search.</h2><p>Try another product, brand, or category.</p></div>}
   </>;
 }

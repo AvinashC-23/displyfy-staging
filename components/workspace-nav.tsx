@@ -43,7 +43,7 @@ export function WorkspaceNav({ role }: { role: Role }) {
 
   return <nav className="workspace-nav" aria-label={`${role} workspace`}>
     <Link className="workspace-brand" href={home} aria-label="Displyfy workspace home">
-      <Image src="/brand/displyfy-logo-v3.svg" alt="Displyfy" width={342} height={87} priority />
+      <Image src="/brand/displyfy-logo-v3.svg" alt="Displyfy" width={342} height={87} />
       <span>{role}</span>
     </Link>
     <div className="workspace-links">

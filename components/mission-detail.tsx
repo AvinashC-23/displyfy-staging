@@ -11,7 +11,7 @@ export function MissionDetail({ mission, mode, canApply = false, unavailableReas
   return <div className="workspace-shell mission-detail-page">
     <Link className="back-link" href={mode === "creator" ? "/creator/missions" : "/brand/dashboard#missions"}><ArrowLeft size={17} aria-hidden /> Back to {mode === "creator" ? "missions" : "workspace"}</Link>
     <section className="mission-detail-hero">
-      <div className="mission-detail-image"><Image src={getMissionImage(mission)} alt="" fill priority sizes="(max-width: 900px) 100vw, 55vw" /><span className={`availability ${availability.available ? "is-open" : ""}`}>{availability.label}</span></div>
+      <div className="mission-detail-image"><Image src={getMissionImage(mission)} alt="" fill preload sizes="(max-width: 900px) 100vw, 55vw" /><span className={`availability ${availability.available ? "is-open" : ""}`}>{availability.label}</span></div>
       <div className="mission-detail-intro">
         <div className="mission-tile-brand">{mission.brandVerified && <BadgeCheck size={18} aria-hidden />}<span>{mission.brandName}</span></div>
         <p className="workspace-kicker">{mission.category} · {mission.accessMode} mission</p>
